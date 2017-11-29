@@ -10,14 +10,14 @@ extern crate mime;
 
 use hyper::header::ContentType;
 use hyper::status::StatusCode;
-use iron::typemap::Key;
-use iron::prelude::*;
 use iron::{Chain, BeforeMiddleware};
-use router::Router;
-use std::fmt;
-use std::error::Error;
-use std::collections::BTreeMap;
+use iron::prelude::*;
+use iron::typemap::Key;
 use params::Params;
+use router::Router;
+use std::collections::BTreeMap;
+use std::error::Error;
+use std::fmt;
 
 lazy_static! {
     pub static ref TEXT_PLAIN: ContentType = ContentType(mime!(Text/Plain; Charset=Utf8));
@@ -69,8 +69,7 @@ fn get_map(req: &mut Request) -> IronResult<BTreeMap<String, String>> {
         .or(Err(IronError::new(Fail(String::from("Parameter parse failed")),
                                StatusCode::BadRequest)))?
         .to_strict_map::<String>()
-        .ok_or(IronError::new(Fail(String::from("Parameter parse failed")),
-                              StatusCode::BadRequest))
+        .ok_or(IronError::new(Fail(String::from("Parameter parse failed")), StatusCode::BadRequest))
 }
 
 impl BeforeMiddleware for Key1 {
